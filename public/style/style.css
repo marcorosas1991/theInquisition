@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'Trattatello';
+    src: url('fonts/Trattatello.ttf');
+}
+
+h1.title {
+  font-family: 'Trattatello';
+}

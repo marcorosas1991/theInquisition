@@ -11,12 +11,5 @@
 <!-- the body section -->
 <body>
 <header>
-    <h1>Spanish Contest</h1>
-    <p>Sports management software for the sports enthusiast</p>
-    <nav>
-        <ul>
-            <li><a href="/tech_support">Home</a></li>
-            <li><a href="/tech_support">Home</a></li>
-        </ul>
-    </nav>
+    <h1>The Inquisition</h1>
 </header>
