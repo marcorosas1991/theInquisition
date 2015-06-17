@@ -4,6 +4,8 @@
   <center>
     <h1>Edit Topic</h1>
 
+    <?php include '../view/error.php'; ?>
+
     <form action="." method="post">
       <input type="hidden" name="topic_id" value="<?php echo $topic_id; ?>"/>
       <label>Name:</label>

@@ -3,11 +3,11 @@
   /*
   question model
 
-  Marco A. rosas
+  Marco A. Rosas
 
   */
 
-  function addQuestion($topic, $difficulty, $question, $answer, $user) {
+  function addQuestion($topic, $difficulty, $question, $answer, $created_by) {
     global $link;
     $query = 'INSERT INTO question (topic, difficulty, question, answer, created_by)
               VALUES (:topic, :difficulty, :question, :answer, :created_by)';
@@ -22,7 +22,7 @@
     $statement->closeCursor();
   }
 
-  function updateQuestion($id, $topic, $difficulty, $question, $answer, $user) {
+  function updateQuestion($id, $topic, $difficulty, $question, $answer, $created_by) {
     global $link;
     $query = 'UPDATE question
               SET topic=:topic

@@ -110,6 +110,11 @@ textarea {
   max-height: 100%;
 }
 
+.answerRow {
+  width:20%;
+  text-align: right;
+}
+
 .button {
   font-family: "Futura";
   font-size: 1em;

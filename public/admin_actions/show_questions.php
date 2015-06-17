@@ -5,7 +5,7 @@
     <h1>Questions</h1>
 
     <?php include '../view/error.php'; ?>
-    
+
     <form action="." method="post">
       <label>&nbsp;</label>
       <input type="submit" class="roundButton" name="action" value="+"/>
@@ -26,28 +26,32 @@
         <table>
           <thead>
             <tr>
-              <th>Name</th>
+              <th>Question</th>
+              <th class='answerRow'>Answer</th>
               <th></th>
               <th></th>
             </tr>
           </thead>
           <tbody>";
-            foreach ($topics as $topic) {
+            foreach ($questions as $question) {
               echo "
               <tr>
                 <td>
-                  ".$topic["name"]."
+                  <p>".$question["question"]."</p>
+                </td>
+                <td>
+                  <p>".$question["answer"]."</p>
                 </td>
                 <td>
                   <form action='.' method='post'>
-                    <input type='hidden' name='topic_id' value='".$topic["id"]."'/>
+                    <input type='hidden' name='q_id' value='".$question["id"]."'/>
                     <input type='hidden' name='action' value='Edit Question'/>
-                    <input type='submit' class='textButton' name='action' value='Edit'/>
+                    <input type='submit' class='textButton' name='submit' value='Edit'/>
                   </form>
                 </td>
                 <td>
                   <form action='.' method='post'>
-                    <input type='hidden' name='topic_id' value='".$topic["id"]."'/>
+                    <input type='hidden' name='q_id' value='".$question["id"]."'/>
                     <input type='hidden' name='action' value='Delete Question'/>
                     <input type='submit' class='textButton' name='submit' value='Delete'/>
                   </form>

@@ -36,13 +36,13 @@
               echo "
               <tr>
                 <td>
-                  ".$topic["name"]."
+                  <p>".$topic["name"]."</p>
                 </td>
                 <td>
                   <form action='.' method='post'>
                     <input type='hidden' name='topic_id' value='".$topic["id"]."'/>
-                    <input type='hidden' name='action' value='Edit Topic'/>
-                    <input type='submit' class='textButton' name='action' value='Edit'/>
+                    <input type='hidden' name='action' value='Edit Topic' />
+                    <input type='submit' class='textButton' name='submit' value='Edit'/>
                   </form>
                 </td>
                 <td>
