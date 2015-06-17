@@ -2,7 +2,7 @@
 
 <section>
   <center>
-    <h1>Edit Topic</h1>
+    <h1>Update Topic</h1>
 
     <?php include '../view/error.php'; ?>
 

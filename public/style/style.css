@@ -64,6 +64,7 @@ a {
   text-align: center;
 }
 
+
 input {
   font-family: "Helvetica";
   font-size: 1em;
@@ -112,7 +113,6 @@ textarea {
 
 .answerRow {
   width:20%;
-  text-align: right;
 }
 
 .button {

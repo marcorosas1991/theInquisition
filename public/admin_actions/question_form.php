@@ -2,7 +2,7 @@
 
 <section>
   <center>
-    <h1>Add Question</h1>
+    <h1><?php echo $action_str; ?> Question</h1>
 
     <?php include '../view/error.php'; ?>
 
@@ -12,11 +12,12 @@
         <label>Choose Topic:</label>
         <select name="q_topic">
           <?php
+            $selected = isset($q_topic) ? $q_topic:-1;
             foreach ($topics as $topic) {
               $topicId = $topic['id'];
               $topicName = $topic['name'];
               echo "
-              <option value='$topicId'>$topicName</option>";
+              <option value='$topicId'".($selected == $topicId ? 'selected':'').">$topicName</option>";
             }
           ?>
         </select>
@@ -29,14 +30,14 @@
         <br>
         <label>Question:</label>
         <br>
-        <textarea type="text" name="question" value="" /><?php echo $question; ?></textarea>
+        <textarea type="text" name="question" value="" /><?php echo isset($q_text) ? $q_text: ""; ?></textarea>
         <br>
         <label>Answer:</label>
         <br>
-        <textarea type="text" name="answer" value="" /><?php echo $answer; ?></textarea>
+        <textarea type="text" name="answer" value="" /><?php echo isset($q_answer) ? $q_answer: ""; ?></textarea>
         <br>
         <label>&nbsp;</label>
-        <input type="submit" class="button" name="action" value="Add Question"/>
+        <input type="submit" class="button" name="action" value="<?php echo $action_str; ?> Question"/>
       </form>
     </div>
 

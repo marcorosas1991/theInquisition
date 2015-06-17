@@ -45,7 +45,7 @@
 
   function getQuestion($id) {
     global $link;
-    $query = 'SELECT id, question, answer
+    $query = 'SELECT id, question, answer, topic, difficulty
               FROM question
               WHERE id=:id';
 

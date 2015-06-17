@@ -72,9 +72,10 @@ else if ($action == 'Questions') {
 } else if ($action == '+') {
 
   $topics = getTopics();
+
+  $action_str = 'Add';
+
   if (count($topics) > 0) {
-    $question = '';
-    $answer = '';
     include 'question_form.php';
   } else {
     // a question requires a topic to be added
@@ -86,8 +87,8 @@ else if ($action == 'Questions') {
 } else if ($action == 'Add Question') {
   $q_topic = filter_input(INPUT_POST, 'q_topic', FILTER_VALIDATE_INT);
   $q_difficulty = filter_input(INPUT_POST, 'q_difficulty', FILTER_VALIDATE_INT);
-  $question = filter_input(INPUT_POST, 'question', FILTER_SANITIZE_STRING);
-  $answer = filter_input(INPUT_POST, 'answer', FILTER_SANITIZE_STRING);
+  $q_text = filter_input(INPUT_POST, 'question', FILTER_SANITIZE_STRING);
+  $q_answer = filter_input(INPUT_POST, 'answer', FILTER_SANITIZE_STRING);
 
   $error = '';
 
@@ -97,28 +98,39 @@ else if ($action == 'Questions') {
   if ($q_difficulty == false || $q_difficulty < 1 || $q_difficulty > 2) {
     $error .= '<br>Select a valid difficulty.';
   }
-  if ($question == false || $answer == false) {
+  if ($q_text == false || $q_answer == false) {
     $error .= '<br>Question or answer can not be blank.';
   }
 
   if ($error == '') {
-    addQuestion($q_topic, $q_difficulty, $question, $answer, 1);
+    addQuestion($q_topic, $q_difficulty, $q_text, $q_answer, 1);
     $questions = getQuestions();
     include 'show_questions.php';
   } else {
     $topics = getTopics();
     include 'question_form.php';
   }
-} else if ($action == 'Edit Question2') {
-  $topic_id = filter_input(INPUT_POST, 'topic_id', FILTER_VALIDATE_INT);
+} else if ($action == 'Edit Question') {
+  $q_id = filter_input(INPUT_POST, 'q_id', FILTER_VALIDATE_INT);
 
-  if ($topic_id == TRUE) {
-    $topic = getTopic($topic_id);
-    $topic_name = $topic['name'];
-    include 'topic_form.php';
+  if ($q_id == TRUE) {
+    $question = getQuestion($q_id);
+    $q_text = $question['question'];
+    $q_answer = $question['answer'];
+    $q_topic = $question['topic'];
+    $q_difficulty = $question['difficulty'];
+
+    $action_str = 'Update';
+
+    $topics = getTopics();
+
+    include 'question_form.php';
   } else {
-    echo 'false, no int';
+    $error = 'There was a problem selecting the question, try again.';
+    $questions = getQuestions();
+    include 'show_questions.php';
   }
+
 } else if ($action == 'Update Question2') {
   $topic_id = filter_input(INPUT_POST, 'topic_id', FILTER_VALIDATE_INT);
   $topic_name = filter_input(INPUT_POST, 'topic_name');
@@ -135,11 +147,13 @@ else if ($action == 'Questions') {
 
   if ($q_id == TRUE) {
     deleteQuestion($q_id);
-    $questions = getQuestions();
-    include 'show_questions.php';
   } else {
-    echo 'false, no int';
+    $error = 'There was a problem deleting the question. Try again.';
   }
+
+  $questions = getQuestions();
+  include 'show_questions.php';
+
 } else {
   echo 'not an action';
   echo $action;
