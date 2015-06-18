@@ -1,15 +1,19 @@
 <?php
 
+// including model files
 require_once '../../db_connection.php';
-require '../model/topics.php';
-require '../model/questions.php';
+require_once '../model/topics.php';
+require_once '../model/questions.php';
 
 $link = db_link();
 
+// getting action from post or get
 $action = filter_input(INPUT_POST, 'action');
-
 if ($action == NULL) {
-  $action = 'Show Menu';
+    $action = filter_input(INPUT_GET, 'action');
+    if ($action == NULL) {
+        $action = 'Show Menu';
+    }
 }
 
 if ($action == 'Show Menu') {
@@ -23,11 +27,13 @@ else if ($action == 'Topics') {
   $topic_name = filter_input(INPUT_POST, 'topic_name');
   if ($topic_name == NULL) {
     $error = 'You must provide a topic name.';
+    $topics = getTopics();
+    include 'show_topics.php';
   } else {
     addTopic($topic_name);
+    returnToTopics();
   }
-  $topics = getTopics();
-  include 'show_topics.php';
+
 } else if ($action == 'Edit Topic') {
   $topic_id = filter_input(INPUT_POST, 'topic_id', FILTER_VALIDATE_INT);
 
@@ -84,11 +90,11 @@ else if ($action == 'Questions') {
     include 'show_questions.php';
   }
 
-} else if ($action == 'Add Question') {
+} else if ($action == 'Add Question' || $action == 'Update Question') {
   $q_topic = filter_input(INPUT_POST, 'q_topic', FILTER_VALIDATE_INT);
   $q_difficulty = filter_input(INPUT_POST, 'q_difficulty', FILTER_VALIDATE_INT);
-  $q_text = filter_input(INPUT_POST, 'question', FILTER_SANITIZE_STRING);
-  $q_answer = filter_input(INPUT_POST, 'answer', FILTER_SANITIZE_STRING);
+  $q_text = filter_input(INPUT_POST, 'q_text', FILTER_SANITIZE_STRING);
+  $q_answer = filter_input(INPUT_POST, 'q_answer', FILTER_SANITIZE_STRING);
 
   $error = '';
 
@@ -102,14 +108,34 @@ else if ($action == 'Questions') {
     $error .= '<br>Question or answer can not be blank.';
   }
 
+  if ($action == 'Update Question') {
+    $q_id = filter_input(INPUT_POST, 'q_id', FILTER_VALIDATE_INT);
+    if ($q_id == false) {
+      $error .= '<br>There was a problem updating the question. Try again.';
+    }
+  }
+
   if ($error == '') {
-    addQuestion($q_topic, $q_difficulty, $q_text, $q_answer, 1);
+    if ($action == 'Update Question') {
+      updateQuestion($q_id,$q_topic, $q_difficulty, $q_text, $q_answer, 1);
+    } else {
+      addQuestion($q_topic, $q_difficulty, $q_text, $q_answer, 1);
+    }
+
+    returnToQuestions();
+
     $questions = getQuestions();
     include 'show_questions.php';
   } else {
+    if ($action == 'Update Question') {
+      $action_str = 'Update';
+    } else {
+      $action_str = 'Add';
+    }
     $topics = getTopics();
     include 'question_form.php';
   }
+
 } else if ($action == 'Edit Question') {
   $q_id = filter_input(INPUT_POST, 'q_id', FILTER_VALIDATE_INT);
 
@@ -131,17 +157,6 @@ else if ($action == 'Questions') {
     include 'show_questions.php';
   }
 
-} else if ($action == 'Update Question2') {
-  $topic_id = filter_input(INPUT_POST, 'topic_id', FILTER_VALIDATE_INT);
-  $topic_name = filter_input(INPUT_POST, 'topic_name');
-
-  if ($topic_id == TRUE && $topic_name == TRUE) {
-    updateTopic($topic_id, $topic_name);
-    $topics = getTopics();
-    include 'show_topics.php';
-  } else {
-    echo 'false, no int, no name';
-  }
 } else if ($action == 'Delete Question') {
   $q_id = filter_input(INPUT_POST, 'q_id', FILTER_VALIDATE_INT);
 
@@ -157,6 +172,16 @@ else if ($action == 'Questions') {
 } else {
   echo 'not an action';
   echo $action;
+}
+
+// these functions are to be used to prevent the user to resend data
+// this avoids duplicate questions and topics
+function returnToQuestions() {
+  header("Location: .?action=Questions");
+}
+
+function returnToTopics() {
+  header("Location: .?action=Topics");
 }
 
 ?>

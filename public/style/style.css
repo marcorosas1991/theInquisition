@@ -64,6 +64,9 @@ a {
   text-align: center;
 }
 
+section {
+  text-align: center;
+}
 
 input {
   font-family: "Helvetica";
@@ -115,6 +118,10 @@ textarea {
   width:20%;
 }
 
+.questionRow {
+  width:40%;
+}
+
 .button {
   font-family: "Futura";
   font-size: 1em;
@@ -147,6 +154,16 @@ textarea {
   border: 0px;
   background-color: none;
   width: auto;
+}
+
+.redLink {
+  color: #aa151b;
+  font-family: "Futura";
+  font-size: 1em;
+}
+
+.backLink {
+  margin-left: 20px;
 }
 
 .roundButton {

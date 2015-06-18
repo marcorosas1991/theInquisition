@@ -70,7 +70,7 @@
     return $topics;
   }
 
-  function deleteQuestion ($id) {
+  function deleteQuestion($id) {
     global $link;
     $query = 'DELETE FROM question
               WHERE id=:id';

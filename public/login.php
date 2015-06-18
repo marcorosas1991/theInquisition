@@ -1,7 +1,6 @@
 <?php include 'view/header.php'; ?>
 
 <section>
-  <center>
     <form action="." method="post">
       <h1>Login</h1>
       <label>username:</label>
@@ -16,7 +15,6 @@
       <br>
       <input type="submit" class="button" name="submit" value="login"/>
     </form>
-  </center>
 </section>
 
 <?php include 'view/footer.php'; ?>
