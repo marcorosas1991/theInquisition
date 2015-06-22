@@ -93,17 +93,19 @@
     }
 
     // determines the difficulty
-    $difficulty = ($random <= $advanced) ? 0 : 1;
+    $difficulty = ($random <= $advanced) ? 2 : 1;
 
     // query
     global $link;
     $query = 'SELECT id, question, answer
               FROM question
               WHERE difficulty=:difficulty
+              AND topic=:topic
               AND used<=:level';
 
     $statement = $link->prepare($query);
     $statement->bindValue(':difficulty', $difficulty);
+    $statement->bindValue(':topic', $topic);
     $statement->bindValue(':level', $level);
     $statement->execute();
     $questions = $statement->fetchAll();
@@ -111,10 +113,11 @@
 
     $numQuestions = count($questions);
 
-    $random = mt_rand(1,$numQuestions);
-
-    return $random;
-
+    if ($numQuestions > 0) {
+      $random = mt_rand(0,$numQuestions - 1);
+      return $questions[$random];
+    }
+    return NULL;
   }
 
 ?>

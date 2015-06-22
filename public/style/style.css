@@ -17,7 +17,7 @@ header {
   padding-left: 20px;
 }
 
-h1.title {
+a.title {
   font-family: 'Trattatello';
   font-size: 3em;
   color: #6c5353;
@@ -28,7 +28,6 @@ h1 {
   font-size: 2em;
   color: #f1bf00;
   text-transform: uppercase;
-  /*font-size: 1em;*/
 }
 
 h1, h2, h3, p, label {
@@ -45,6 +44,7 @@ label {
 
 table {
   font-family: "Futura", Helvetica;
+  width: 80%;
 }
 
 hr {
@@ -64,8 +64,17 @@ a {
   text-align: center;
 }
 
+.floatRight {
+  float: right;
+}
+
+.alignRight {
+  text-align: right;
+}
+
 section {
   text-align: center;
+  clear: both;
 }
 
 input {
@@ -128,6 +137,8 @@ textarea {
   border-radius: .5em;
   color: white;
 
+  border: 1px solid transparent;
+
   letter-spacing:1px;
   width: 200px;
   height: 30px;
@@ -151,7 +162,7 @@ textarea {
 
 .textButton {
   font-family: "Futura";
-  border: 0px;
+  border: 1px solid white;
   background-color: none;
   width: auto;
 }
@@ -184,4 +195,14 @@ textarea {
 .adminBtnColor2 {
   color: white;
   background-color: #999999;
+}
+
+.btnColor1 {
+  color: white;
+  background-color: #f1bf00;
+}
+
+.btnColor2 {
+  color: white;
+  background-color: #aa151b;
 }

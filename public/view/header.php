@@ -11,5 +11,11 @@
 <!-- the body section -->
 <body>
 <header>
-    <a href="."><h1 class="title">The Inquisition</h1></a>
+  <a class="title" href=".">The Inquisition</a>
+  <?php
+  if (isset($start_in_menu)) : ?>
+    <form action="." method="post">
+      <input type="submit" class="button floatRight" name="action" value="Start Contest"/>
+    </form>
+  <?php endif; ?>
 </header>

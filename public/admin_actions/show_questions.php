@@ -31,6 +31,7 @@
             <th class='questionRow'>Question</th>
             <th class='answerRow'>Answer</th>
             <th>Difficulty</th>
+            <th>Topic</th>
             <th></th>
             <th></th>
           </tr>
@@ -47,6 +48,9 @@
               </td>
               <td>
                 <p>".($question["difficulty"] == 1 ? "Standard":"Advanced")."</p>
+              </td>
+              <td>
+                <p>".$question["topic"]."</p>
               </td>
               <td>
                 <form action='.' method='post'>

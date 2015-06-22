@@ -3,6 +3,7 @@
 <section>
     <form action="." method="post">
       <h1>Login</h1>
+      <?php include 'view/error.php'; ?>
       <label>username:</label>
       <br>
       <input type="text" class="centerText" name="username"/>
@@ -13,7 +14,7 @@
       <br>
       <label>&nbsp;</label>
       <br>
-      <input type="submit" class="button" name="submit" value="login"/>
+      <input type="submit" class="button" name="action" value="login"/>
     </form>
 </section>
 

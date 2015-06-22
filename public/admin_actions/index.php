@@ -4,8 +4,12 @@
 require_once '../../db_connection.php';
 require_once '../model/topics.php';
 require_once '../model/questions.php';
+require_once '../model/session.php';
+
+validateSession();
 
 $link = db_link();
+$start_in_menu = 'YES';
 
 // getting action from post or get
 $action = filter_input(INPUT_POST, 'action');
@@ -169,7 +173,9 @@ else if ($action == 'Questions') {
   $questions = getQuestions();
   include 'show_questions.php';
 
-} else {
+} elseif ($action == 'Start Contest') {
+  header('Location: ../contest_actions/');
+}else {
   echo 'not an action';
   echo $action;
 }

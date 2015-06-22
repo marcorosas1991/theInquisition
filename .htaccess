@@ -1,0 +1,10 @@
+Options -Indexes
+
+RewriteEngine On
+#for production server
+RewriteCond %{HTTP_HOST} ^theroomie.com$ [NC,OR]
+#for local dev server
+RewriteCond %{HTTP_HOST} ^localhost$ [NC]
+#send to public folder
+RewriteCond %{REQUEST_URI} !public/
+RewriteRule (.*) /public/$1 [L]
