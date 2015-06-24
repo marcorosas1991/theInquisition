@@ -176,8 +176,7 @@ else if ($action == 'Questions') {
 } elseif ($action == 'Start Contest') {
   header('Location: ../contest_actions/');
 }else {
-  echo 'not an action';
-  echo $action;
+  include 'show_menu.php';
 }
 
 // these functions are to be used to prevent the user to resend data

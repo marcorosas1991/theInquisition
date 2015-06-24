@@ -16,7 +16,7 @@ if (!isset($action)) {
 
 if ($action == 'show_games') {
   include 'show_games.php';
-} else if ($action == 'Start Contest') {
+} else if ($action == 'Start Contest' || $action == 'Done') {
   // do extra verification to ensure teams and games
   $topics = getTopics();
   include 'pick_topic.php';
@@ -29,6 +29,12 @@ if ($action == 'show_games') {
 
     if ($question != NULL) {
       $q_text = $question['question'];
+      $q_id = $question['id'];
+
+      $action = 'Show Answer';
+
+      updateLevel($q_id, 5);
+
       include 'show_question.php';
       exit();
     } else {
@@ -42,8 +48,30 @@ if ($action == 'show_games') {
   include 'pick_topic.php';
 
 } else if ($action == 'Show Answer') {
-  echo 'show answer';
-  include 'show.php';
+
+  $q_id = filter_input(INPUT_POST, 'q_id', FILTER_VALIDATE_INT);
+
+  if ($q_id != NULL) {
+    $question = getQuestion($q_id);
+
+    if ($question != NULL) {
+      $q_text = $question['question'];
+      $q_id = $question['id'];
+      $q_answer = $question['answer'];
+
+      $action = 'Done';
+
+      include 'show_question.php';
+      exit();
+    } else {
+      $error = 'No more questions. Pick another topic.';
+    }
+  } else {
+    $error = 'Pick a topic again';
+  }
+
+  $topics = getTopics();
+  include 'pick_topic.php';
 }
 
 ?>

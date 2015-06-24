@@ -34,6 +34,11 @@ h1, h2, h3, p, label {
   font-family: Futura, Helvetica;
 }
 
+p.answerText {
+  font-style: italic;
+  font-family: helvetica;
+}
+
 label {
   border: 10px;
 }

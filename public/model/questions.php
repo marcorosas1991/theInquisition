@@ -43,6 +43,19 @@
     $statement->closeCursor();
   }
 
+  function updateLevel($id,$level) {
+    global $link;
+    $query = 'UPDATE question
+              SET used=:level
+              WHERE id=:id';
+
+    $statement = $link->prepare($query);
+    $statement->bindValue(':id', $id);
+    $statement->bindValue(':level', $level);
+    $statement->execute();
+    $statement->closeCursor();
+  }
+
   function getQuestion($id) {
     global $link;
     $query = 'SELECT id, question, answer, topic, difficulty
@@ -97,7 +110,7 @@
 
     // query
     global $link;
-    $query = 'SELECT id, question, answer
+    $query = 'SELECT id, topic, difficulty, question, answer
               FROM question
               WHERE difficulty=:difficulty
               AND topic=:topic
@@ -112,9 +125,10 @@
     $statement->closeCursor();
 
     $numQuestions = count($questions);
+    echo "<br><b>".$numQuestions."</b>";
 
     if ($numQuestions > 0) {
-      $random = mt_rand(0,$numQuestions - 1);
+      $random = mt_rand(0, $numQuestions - 1);
       return $questions[$random];
     }
     return NULL;
