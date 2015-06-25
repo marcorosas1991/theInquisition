@@ -16,7 +16,7 @@ if (!isset($action)) {
 
 if ($action == 'show_games') {
   include 'show_games.php';
-} else if ($action == 'Start Contest' || $action == 'Done') {
+} else if ($action == 'Start Round' || $action == 'Done') {
   // do extra verification to ensure teams and games
   $topics = getTopics();
   include 'pick_topic.php';
@@ -32,8 +32,6 @@ if ($action == 'show_games') {
       $q_id = $question['id'];
 
       $action = 'Show Answer';
-
-      updateLevel($q_id, 5);
 
       include 'show_question.php';
       exit();

@@ -5,11 +5,13 @@
     <?php echo $q_text; ?>
   </p>
 
-  <?php
-  if (isset($q_answer)) {
-    echo "<p class='answerText'>answer: ".$q_answer."</p>";
-  }
-  ?>
+  <p class='answerText'>
+    <?php
+    if (isset($q_answer)) {
+      echo $q_answer;
+    }
+    ?>
+  </p>
 
   <form class="alignRight" action="." method="post">
     <input type="hidden" name="q_id" value="<?php echo $q_id; ?>"/>

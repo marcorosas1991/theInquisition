@@ -108,13 +108,24 @@
     // determines the difficulty
     $difficulty = ($random <= $advanced) ? 2 : 1;
 
+    $question = getRQuestion($topic, $level, $difficulty);
+
+    if ($question == NULL) {
+      $difficulty = ($difficulty == 1) ? 2 : 1;
+      return getRQuestion($topic, $level, $difficulty);
+    }
+
+    return $question;
+  }
+
+  function getRQuestion($topic, $level, $difficulty) {
     // query
     global $link;
-    $query = 'SELECT id, topic, difficulty, question, answer
+    $query = 'SELECT id, topic, difficulty, question
               FROM question
               WHERE difficulty=:difficulty
               AND topic=:topic
-              AND used<=:level';
+              AND used<:level';
 
     $statement = $link->prepare($query);
     $statement->bindValue(':difficulty', $difficulty);
@@ -125,13 +136,25 @@
     $statement->closeCursor();
 
     $numQuestions = count($questions);
-    echo "<br><b>".$numQuestions."</b>";
 
     if ($numQuestions > 0) {
       $random = mt_rand(0, $numQuestions - 1);
-      return $questions[$random];
+      $question = $questions[$random];
+
+      updateLevel($question['id'], $level);
+
+      return $question;
     }
+
     return NULL;
+  }
+
+  function resetQLevel() {
+    global $link;
+    $query = 'UPDATE question
+              SET used=0';
+    $statement = $link->prepare($query);
+    $statement->execute();
   }
 
 ?>

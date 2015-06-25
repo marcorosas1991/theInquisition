@@ -37,6 +37,7 @@ h1, h2, h3, p, label {
 p.answerText {
   font-style: italic;
   font-family: helvetica;
+  color: #aa151b;
 }
 
 label {
@@ -210,4 +211,11 @@ textarea {
 .btnColor2 {
   color: white;
   background-color: #aa151b;
+}
+
+.contest_topic {
+  display: inline;
+  float: left;
+  margin-left: 10px;
+  margin-right: 10px;
 }

@@ -4,6 +4,8 @@
 require_once '../../db_connection.php';
 require_once '../model/topics.php';
 require_once '../model/questions.php';
+require_once '../model/teams.php';
+
 require_once '../model/session.php';
 
 validateSession();
@@ -78,6 +80,11 @@ else if ($action == 'Topics') {
 // Question actions
 else if ($action == 'Questions') {
   $questions = getQuestions();
+  $topics = getTopics();
+
+  foreach ($topics as $topic) {
+    $topics_names[$topic['id']] = $topic['name'];
+  }
   include 'show_questions.php';
 } else if ($action == '+') {
 
@@ -175,18 +182,77 @@ else if ($action == 'Questions') {
 
 } elseif ($action == 'Start Contest') {
   header('Location: ../contest_actions/');
-}else {
+}
+
+//team actions
+else if ($action == 'Teams') {
+  $teams = getTeams();
+  include 'show_teams.php';
+} else if ($action == 'Add Team') {
+  $team_name = filter_input(INPUT_POST, 'team_name');
+  if ($team_name == NULL) {
+    $error = 'You must provide a team name.';
+    $teams = getTeams();
+    include 'show_teams.php';
+  } else {
+    addTeam($team_name);
+    returnToTeams();
+  }
+
+} else if ($action == 'Edit Team') {
+  $team_id = filter_input(INPUT_POST, 'team_id', FILTER_VALIDATE_INT);
+
+  if ($team_id == TRUE) {
+    $team = getTeam($team_id);
+    $team_name = $team['name'];
+    include 'team_form.php';
+  } else {
+    $error ='Select the team again';
+    $teams = getTeams();
+    include 'show_teams.php';
+  }
+} else if ($action == 'Update Team') {
+  $team_id = filter_input(INPUT_POST, 'team_id', FILTER_VALIDATE_INT);
+  $team_name = filter_input(INPUT_POST, 'team_name');
+
+  if ($team_id == TRUE && $team_name == TRUE) {
+    updateTeam($team_id, $team_name);
+    $teams = getTeams();
+    include 'show_teams.php';
+  } else {
+    $error ='There was a problem updating the team. Try again.';
+    $teams = getTeams();
+    include 'show_teams.php';
+  }
+} else if ($action == 'Delete Team') {
+  $team_id = filter_input(INPUT_POST, 'team_id', FILTER_VALIDATE_INT);
+
+  if ($team_id == TRUE) {
+    deleteTeam($team_id);
+    $teams = getTeams();
+    include 'show_teams.php';
+  } else {
+    echo 'false, no int';
+  }
+}
+
+else {
   include 'show_menu.php';
 }
 
 // these functions are to be used to prevent the user to resend data
 // this avoids duplicate questions and topics
+// post/redirect/get
 function returnToQuestions() {
   header("Location: .?action=Questions");
 }
 
 function returnToTopics() {
   header("Location: .?action=Topics");
+}
+
+function returnToTeams() {
+  header("Location: .?action=Teams");
 }
 
 ?>
