@@ -12,6 +12,7 @@
 <body>
 <header>
   <a class="title" href=".">The Inquisition</a>
+
   <?php
   if (isset($start_in_menu)) : ?>
     <form action="." method="post">

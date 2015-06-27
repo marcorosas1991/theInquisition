@@ -98,6 +98,11 @@ else if ($action == 'Questions') {
     // a question requires a topic to be added
     $error = 'To add a question you must add a topic first.';
     $questions = getQuestions();
+
+    foreach ($topics as $topic) {
+      $topics_names[$topic['id']] = $topic['name'];
+    }
+
     include 'show_questions.php';
   }
 
@@ -136,6 +141,9 @@ else if ($action == 'Questions') {
     returnToQuestions();
 
     $questions = getQuestions();
+    foreach ($topics as $topic) {
+      $topics_names[$topic['id']] = $topic['name'];
+    }
     include 'show_questions.php';
   } else {
     if ($action == 'Update Question') {
@@ -165,6 +173,9 @@ else if ($action == 'Questions') {
   } else {
     $error = 'There was a problem selecting the question, try again.';
     $questions = getQuestions();
+    foreach ($topics as $topic) {
+      $topics_names[$topic['id']] = $topic['name'];
+    }
     include 'show_questions.php';
   }
 
@@ -178,6 +189,9 @@ else if ($action == 'Questions') {
   }
 
   $questions = getQuestions();
+  foreach ($topics as $topic) {
+    $topics_names[$topic['id']] = $topic['name'];
+  }
   include 'show_questions.php';
 
 } elseif ($action == 'Start Contest') {
@@ -237,7 +251,8 @@ else if ($action == 'Teams') {
 }
 
 else {
-  include 'show_menu.php';
+  session_destroy();
+  header("Location: ../.");
 }
 
 // these functions are to be used to prevent the user to resend data
