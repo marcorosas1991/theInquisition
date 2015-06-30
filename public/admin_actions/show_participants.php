@@ -4,7 +4,7 @@
 
 <section>
 
-  <h1>Questions</h1>
+  <h1>Participants</h1>
 
   <?php include '../view/error.php'; ?>
 
@@ -16,19 +16,19 @@
 
   <?php
 
-    $numQuestions = count($questions);
+    $numParticipants = count($participants);
 
-    if($numQuestions == 0) {
-      echo '<p>0 Questions</p>';
+    if($numParticipants == 0) {
+      echo '<p>0 Participants</p>';
     } else {
-      $ending = $numQuestions == 1 ? "":"s";
-      echo "<p>$numQuestions Question".$ending."</p>";
+      $ending = $numParticipants == 1 ? "":"s";
+      echo "<p>$numParticipants Participant".$ending."</p>";
 
       echo "
       <table class='center'>
         <thead>
           <tr>
-            <th class='questionRow'>Question</th>
+            <th class='participantRow'>Participant</th>
             <th class='answerRow'>Answer</th>
             <th>Difficulty</th>
             <th>Topic</th>
@@ -37,32 +37,32 @@
           </tr>
         </thead>
         <tbody>";
-          foreach ($questions as $question) {
+          foreach ($participants as $participant) {
             echo "
             <tr>
               <td>
-                <p>".$question["question"]."</p>
+                <p>".$participant["participant"]."</p>
               </td>
               <td class='centerText'>
-                <p>".$question["answer"]."</p>
+                <p>".$participant["answer"]."</p>
               </td>
               <td>
-                <p>".($question["difficulty"] == 1 ? "Standard":"Advanced")."</p>
+                <p>".($participant["difficulty"] == 1 ? "Standard":"Advanced")."</p>
               </td>
               <td>
-                <p>".$topics_names[$question["topic"]]."</p>
+                <p>".$topics_names[$participant["topic"]]."</p>
               </td>
               <td>
                 <form action='.' method='post'>
-                  <input type='hidden' name='q_id' value='".$question["id"]."'/>
-                  <input type='hidden' name='action' value='Edit Question'/>
+                  <input type='hidden' name='q_id' value='".$participant["id"]."'/>
+                  <input type='hidden' name='action' value='Edit Participant'/>
                   <input type='submit' class='textButton' name='submit' value='Edit'/>
                 </form>
               </td>
               <td>
                 <form action='.' method='post'>
-                  <input type='hidden' name='q_id' value='".$question["id"]."'/>
-                  <input type='hidden' name='action' value='Delete Question'/>
+                  <input type='hidden' name='q_id' value='".$participant["id"]."'/>
+                  <input type='hidden' name='action' value='Delete Participant'/>
                   <input type='submit' class='textButton' name='submit' value='Delete'/>
                 </form>
               </td>

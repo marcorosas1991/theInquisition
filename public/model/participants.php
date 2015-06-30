@@ -21,7 +21,7 @@
     $statement->closeCursor();
   }
 
-  function updateParticipant($id, $name, $email, $major, $team, $created_by) {
+  function updateParticipant($id, $name, $email, $major, $team) {
     global $link;
     $query = 'UPDATE participant
               SET name=:name
@@ -37,7 +37,6 @@
     $statement->bindValue(':email', $email);
     $statement->bindValue(':participant', $participant);
     $statement->bindValue(':team', $team);
-    $statement->bindValue(':created_by', $created_by);
     $statement->execute();
     $statement->closeCursor();
   }

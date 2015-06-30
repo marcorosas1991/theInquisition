@@ -5,6 +5,7 @@ require_once '../../db_connection.php';
 require_once '../model/topics.php';
 require_once '../model/questions.php';
 require_once '../model/teams.php';
+require_once '../model/participants.php';
 
 require_once '../model/session.php';
 
@@ -25,22 +26,26 @@ if ($action == NULL) {
 if ($action == 'Show Menu') {
   include 'show_menu.php';
 }
-// Topic actions
+// ************ TOPIC ACTIONS
+// shows topics
 else if ($action == 'Topics') {
-  $topics = getTopics();
-  include 'show_topics.php';
-} else if ($action == 'Add Topic') {
+  showTopics();
+}
+// add topic
+else if ($action == 'Add Topic') {
   $topic_name = filter_input(INPUT_POST, 'topic_name');
+  // makes sure topic name is not empty
   if ($topic_name == NULL) {
     $error = 'You must provide a topic name.';
-    $topics = getTopics();
-    include 'show_topics.php';
+    showTopics($error);
   } else {
     addTopic($topic_name);
     returnToTopics();
   }
 
-} else if ($action == 'Edit Topic') {
+}
+// edit topic
+else if ($action == 'Edit Topic') {
   $topic_id = filter_input(INPUT_POST, 'topic_id', FILTER_VALIDATE_INT);
 
   if ($topic_id == TRUE) {
@@ -49,47 +54,44 @@ else if ($action == 'Topics') {
     include 'topic_form.php';
   } else {
     $error ='Select the topic again';
-    $topics = getTopics();
-    include 'show_topics.php';
+    showTopics($error);
   }
-} else if ($action == 'Update Topic') {
+}
+// update topic
+else if ($action == 'Update Topic') {
   $topic_id = filter_input(INPUT_POST, 'topic_id', FILTER_VALIDATE_INT);
   $topic_name = filter_input(INPUT_POST, 'topic_name');
 
   if ($topic_id == TRUE && $topic_name == TRUE) {
     updateTopic($topic_id, $topic_name);
-    $topics = getTopics();
-    include 'show_topics.php';
+    $error = '';
   } else {
-    $error ='There was a problem updating the topic. Try again.';
-    $topics = getTopics();
-    include 'show_topics.php';
+    $error ='There was a problem UPDATING the topic. Try again.';
   }
-} else if ($action == 'Delete Topic') {
+  showTopics($error);
+}
+// delete topic
+else if ($action == 'Delete Topic') {
   $topic_id = filter_input(INPUT_POST, 'topic_id', FILTER_VALIDATE_INT);
 
   if ($topic_id == TRUE) {
     deleteTopic($topic_id);
-    $topics = getTopics();
-    include 'show_topics.php';
+    $error = '';
   } else {
-    echo 'false, no int';
+    $error ='There was a problem DELETING the topic. Try again.';
   }
+  showTopics($error);
 }
 
-// Question actions
+// ************ QUESTION ACTIONS
+// show Questions
 else if ($action == 'Questions') {
-  $questions = getQuestions();
-  $topics = getTopics();
-
-  foreach ($topics as $topic) {
-    $topics_names[$topic['id']] = $topic['name'];
-  }
-  include 'show_questions.php';
-} else if ($action == '+') {
+  showQuestions();
+}
+// show question form
+else if ($action == '+') {
 
   $topics = getTopics();
-
   $action_str = 'Add';
 
   if (count($topics) > 0) {
@@ -97,16 +99,13 @@ else if ($action == 'Questions') {
   } else {
     // a question requires a topic to be added
     $error = 'To add a question you must add a topic first.';
-    $questions = getQuestions();
-
-    foreach ($topics as $topic) {
-      $topics_names[$topic['id']] = $topic['name'];
-    }
-
-    include 'show_questions.php';
+    showQuestions($error);
   }
 
-} else if ($action == 'Add Question' || $action == 'Update Question') {
+}
+// adding or updating a question
+else if ($action == 'Add Question' || $action == 'Update Question') {
+
   $q_topic = filter_input(INPUT_POST, 'q_topic', FILTER_VALIDATE_INT);
   $q_difficulty = filter_input(INPUT_POST, 'q_difficulty', FILTER_VALIDATE_INT);
   $q_text = filter_input(INPUT_POST, 'q_text', FILTER_SANITIZE_STRING);
@@ -127,7 +126,7 @@ else if ($action == 'Questions') {
   if ($action == 'Update Question') {
     $q_id = filter_input(INPUT_POST, 'q_id', FILTER_VALIDATE_INT);
     if ($q_id == false) {
-      $error .= '<br>There was a problem updating the question. Try again.';
+      $error .= '<br>There was a problem UPDATING the question. Try again.';
     }
   }
 
@@ -140,11 +139,6 @@ else if ($action == 'Questions') {
 
     returnToQuestions();
 
-    $questions = getQuestions();
-    foreach ($topics as $topic) {
-      $topics_names[$topic['id']] = $topic['name'];
-    }
-    include 'show_questions.php';
   } else {
     if ($action == 'Update Question') {
       $action_str = 'Update';
@@ -155,7 +149,9 @@ else if ($action == 'Questions') {
     include 'question_form.php';
   }
 
-} else if ($action == 'Edit Question') {
+}
+// edit question
+else if ($action == 'Edit Question') {
   $q_id = filter_input(INPUT_POST, 'q_id', FILTER_VALIDATE_INT);
 
   if ($q_id == TRUE) {
@@ -172,48 +168,42 @@ else if ($action == 'Questions') {
     include 'question_form.php';
   } else {
     $error = 'There was a problem selecting the question, try again.';
-    $questions = getQuestions();
-    foreach ($topics as $topic) {
-      $topics_names[$topic['id']] = $topic['name'];
-    }
-    include 'show_questions.php';
+    showQuestions($error);
   }
 
-} else if ($action == 'Delete Question') {
+}
+// delete questions
+else if ($action == 'Delete Question') {
   $q_id = filter_input(INPUT_POST, 'q_id', FILTER_VALIDATE_INT);
 
   if ($q_id == TRUE) {
     deleteQuestion($q_id);
+    $error = '';
   } else {
-    $error = 'There was a problem deleting the question. Try again.';
+    $error = 'There was a problem DELETING the question. Try again.';
   }
+  showQuestions($error);
 
-  $questions = getQuestions();
-  foreach ($topics as $topic) {
-    $topics_names[$topic['id']] = $topic['name'];
-  }
-  include 'show_questions.php';
-
-} elseif ($action == 'Start Contest') {
-  header('Location: ../contest_actions/');
 }
 
-//team actions
+// ************ TEAM ACTIONS
+// show teams
 else if ($action == 'Teams') {
-  $teams = getTeams();
-  include 'show_teams.php';
-} else if ($action == 'Add Team') {
+  showTeams();
+}
+// add a team
+else if ($action == 'Add Team') {
   $team_name = filter_input(INPUT_POST, 'team_name');
   if ($team_name == NULL) {
     $error = 'You must provide a team name.';
-    $teams = getTeams();
-    include 'show_teams.php';
+    showTeams($error);
   } else {
     addTeam($team_name);
     returnToTeams();
   }
-
-} else if ($action == 'Edit Team') {
+}
+// edit a team
+else if ($action == 'Edit Team') {
   $team_id = filter_input(INPUT_POST, 'team_id', FILTER_VALIDATE_INT);
 
   if ($team_id == TRUE) {
@@ -222,34 +212,99 @@ else if ($action == 'Teams') {
     include 'team_form.php';
   } else {
     $error ='Select the team again';
-    $teams = getTeams();
-    include 'show_teams.php';
+    showTeams($error);
   }
-} else if ($action == 'Update Team') {
+}
+// update team
+else if ($action == 'Update Team') {
   $team_id = filter_input(INPUT_POST, 'team_id', FILTER_VALIDATE_INT);
   $team_name = filter_input(INPUT_POST, 'team_name');
 
   if ($team_id == TRUE && $team_name == TRUE) {
     updateTeam($team_id, $team_name);
-    $teams = getTeams();
-    include 'show_teams.php';
+    showTeams();
   } else {
-    $error ='There was a problem updating the team. Try again.';
-    $teams = getTeams();
-    include 'show_teams.php';
+    $error ='There was a problem UPDATING the team. Try again.';
+    showTeams($error);
   }
-} else if ($action == 'Delete Team') {
+
+}
+// delete team
+else if ($action == 'Delete Team') {
   $team_id = filter_input(INPUT_POST, 'team_id', FILTER_VALIDATE_INT);
 
   if ($team_id == TRUE) {
     deleteTeam($team_id);
-    $teams = getTeams();
-    include 'show_teams.php';
+    showTeams();
   } else {
-    echo 'false, no int';
+    $error ='There was a problem DELETING the team. Try again.';
+    showTeams($error);
   }
 }
 
+// ************ PARTICIPANT ACTIONS
+else if ($action == 'Participants') {
+  showParticipants();
+}
+// add participant
+else if ($action == 'Add Participant') {
+  $participant_name = filter_input(INPUT_POST, 'participant_name');
+  // makes sure participant name is not empty
+  if ($participant_name == NULL) {
+    $error = 'You must provide a participant name.';
+    showParticipants($error);
+  } else {
+    addParticipant($participant_name);
+    returnToParticipants();
+  }
+
+}
+// edit participant
+else if ($action == 'Edit Participant') {
+  $participant_id = filter_input(INPUT_POST, 'participant_id', FILTER_VALIDATE_INT);
+
+  if ($participant_id == TRUE) {
+    $participant = getParticipant($participant_id);
+    $participant_name = $participant['name'];
+    include 'participant_form.php';
+  } else {
+    $error ='Select the participant again';
+    showParticipants($error);
+  }
+}
+// update participant
+else if ($action == 'Update Participant') {
+  $participant_id = filter_input(INPUT_POST, 'participant_id', FILTER_VALIDATE_INT);
+  $participant_name = filter_input(INPUT_POST, 'participant_name');
+
+  if ($participant_id == TRUE && $participant_name == TRUE) {
+    updateParticipant($participant_id, $participant_name);
+    $error = '';
+  } else {
+    $error ='There was a problem UPDATING the participant. Try again.';
+  }
+  showParticipants($error);
+}
+// delete participant
+else if ($action == 'Delete Participant') {
+  $participant_id = filter_input(INPUT_POST, 'participant_id', FILTER_VALIDATE_INT);
+
+  if ($participant_id == TRUE) {
+    deleteParticipant($participant_id);
+    $error = '';
+  } else {
+    $error ='There was a problem DELETING the participant. Try again.';
+  }
+  showParticipants($error);
+}
+
+
+// START CONTEST ACTIONS
+elseif ($action == 'Start Contest') {
+  header('Location: ../contest_actions/');
+}
+
+// ************ ELSE ACTIONS
 else {
   session_destroy();
   header("Location: ../.");
@@ -269,5 +324,36 @@ function returnToTopics() {
 function returnToTeams() {
   header("Location: .?action=Teams");
 }
+
+// functions to load the corresponding views
+function showTopics($errors = '') {
+  $error = $errors;
+  $topics = getTopics();
+  include 'show_topics.php';
+}
+
+function showQuestions($errors = '')
+{
+  $error = $errors;
+  $questions = getQuestions();
+  $topics = getTopics();
+  foreach ($topics as $topic) {
+    $topics_names[$topic['id']] = $topic['name'];
+  }
+  include 'show_questions.php';
+}
+
+function showTeams($errors = '') {
+  $error = $errors;
+  $teams = getTeams();
+  include 'show_teams.php';
+}
+
+function showParticipants($errors = '')
+{
+  include 'show_teams.php';
+}
+
+
 
 ?>
