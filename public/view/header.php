@@ -16,7 +16,7 @@
   <?php
   if (isset($start_in_menu)) : ?>
     <form action="." method="post">
-      <input type="submit" class="button floatRight" name="action" value="Start Contest"/>
+      <input type="submit" class="button floatRight" name="action" value="Log Out"/>
     </form>
   <?php endif; ?>
 </header>
