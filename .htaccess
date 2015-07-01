@@ -2,6 +2,7 @@ Options -Indexes
 
 RewriteEngine On
 #for production server
+RewriteCond %{HTTP_HOST} ^theinquisition.cf$ [NC,OR]
 RewriteCond %{HTTP_HOST} ^104.131.175.126$ [NC,OR]
 #for local dev server
 RewriteCond %{HTTP_HOST} ^localhost$ [NC]
