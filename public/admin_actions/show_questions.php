@@ -8,8 +8,10 @@
     <form action="." method="post">
       <label>&nbsp;</label>
       <input type="hidden" name="action" value="search_questions"/>
-      <input type="text" name="search_str" value="" placeholder="Search for questions"/>
-      <input type="submit" class="button" name="submit" value="Search"/>
+      <input type="text" class="searchField" name="search_str" value="" placeholder="Search for questions"/>
+      <input type="submit" class="button autoSize" name="submit" value="Search"/>
+      <?php echo isset($search_inst) == true ?
+      "<p class='gentleInstructions'>Search empty to show all questions.</p>" : ""?>
     </form>
   </div>
 

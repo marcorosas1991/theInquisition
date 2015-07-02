@@ -40,6 +40,13 @@ p.answerText {
   color: #aa151b;
 }
 
+p.gentleInstructions {
+  font-style: italic;
+  font-family: helvetica;
+  font-size: 0.8em;
+  margin-top: -5px;
+}
+
 label {
   border: 10px;
 }
@@ -80,6 +87,14 @@ a {
 
 .clear {
   clear: both;
+}
+
+.autoSize {
+  width: auto;
+}
+
+.searchField {
+  width: 300px;
 }
 
 section {
@@ -154,7 +169,6 @@ textarea {
   border: 1px solid transparent;
 
   letter-spacing:1px;
-  width: 200px;
   height: 30px;
   border: 0px;
   background-color: #aa151b;

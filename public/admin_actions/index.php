@@ -90,13 +90,8 @@ else if ($action == 'Questions') {
 }
 else if ($action == 'search_questions') {
   $search_str = filter_input(INPUT_POST, 'search_str');
-  if ($search_str == NULL) {
-    $error = 'Try searching again';
-    $search_str = '';
-  } else {
-    $error = '';
-  }
-  showQuestions($search_str,$error);
+  $error = '';
+  showQuestions($error, $search_str);
 }
 // show question form
 else if ($action == 'add_question') {
@@ -349,12 +344,13 @@ function showTopics($errors = '') {
   include 'show_topics.php';
 }
 
-function showQuestions($search_str = '', $errors = '')
+function showQuestions($errors = '', $search_str = '')
 {
   $error = $errors;
 
   if ($search_str != '') {
     $questions = getQuestionSearch($search_str);
+    $search_inst = TRUE;
   } else {
     $questions = getQuestions();
   }
