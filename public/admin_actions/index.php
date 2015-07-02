@@ -88,8 +88,18 @@ else if ($action == 'Delete Topic') {
 else if ($action == 'Questions') {
   showQuestions();
 }
+else if ($action == 'search_questions') {
+  $search_str = filter_input(INPUT_POST, 'search_str');
+  if ($search_str == NULL) {
+    $error = 'Try searching again';
+    $search_str = '';
+  } else {
+    $error = '';
+  }
+  showQuestions($search_str,$error);
+}
 // show question form
-else if ($action == '+') {
+else if ($action == 'add_question') {
 
   $topics = getTopics();
   $action_str = 'Add';
@@ -247,7 +257,14 @@ else if ($action == 'Participants') {
   showParticipants();
 }
 // add participant
+else if ($action == 'add_') {
+  $teams = getTeams();
+  $action_str = 'Add';
+  include 'participant_form.php';
+}
+// insert participant
 else if ($action == 'Add Participant') {
+  $participant_name = filter_input(INPUT_POST, 'participant_name');
   $participant_name = filter_input(INPUT_POST, 'participant_name');
   // makes sure participant name is not empty
   if ($participant_name == NULL) {
@@ -332,10 +349,16 @@ function showTopics($errors = '') {
   include 'show_topics.php';
 }
 
-function showQuestions($errors = '')
+function showQuestions($search_str = '', $errors = '')
 {
   $error = $errors;
-  $questions = getQuestions();
+
+  if ($search_str != '') {
+    $questions = getQuestionSearch($search_str);
+  } else {
+    $questions = getQuestions();
+  }
+
   $topics = getTopics();
   foreach ($topics as $topic) {
     $topics_names[$topic['id']] = $topic['name'];

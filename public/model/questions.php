@@ -94,6 +94,20 @@
     $statement->closeCursor();
   }
 
+  function getQuestionSearch($search_str) {
+    global $link;
+    $query = 'SELECT q1.id, q1.question, q1.answer, q1.topic, q1.difficulty
+              FROM question q1
+              WHERE q1.question LIKE :search_str';
+
+    $statement = $link->prepare($query);
+    $statement->bindValue(':search_str', '%'.$search_str.'%');
+    $statement->execute();
+    $questions = $statement->fetchAll();
+    $statement->closeCursor();
+    return $questions;
+  }
+
   function getRandomQuestion($topic, $level) {
     // generates random number beetwen 1 and 10
     $random = mt_rand(1,10);

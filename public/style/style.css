@@ -78,6 +78,10 @@ a {
   text-align: right;
 }
 
+.clear {
+  clear: both;
+}
+
 section {
   text-align: center;
   clear: both;
@@ -95,6 +99,10 @@ input {
   background-color: white;
   margin-bottom: 10px;
   outline: 0;
+}
+
+input.wide {
+  width: 50%;
 }
 
 input:focus, select:focus, textarea:focus {

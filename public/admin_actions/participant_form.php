@@ -10,34 +10,32 @@
   <div>
     <form action="." method="post">
       <input type="hidden" name="p_id" <?php echo isset($p_id) ? "value='".$p_id."'": ""?>/>
-      <label>Choose Topic:</label>
+      <label>Choose a team:</label>
+      <br>
       <select name="p_topic">
         <?php
-          $t_selection = isset($p_topic) ? $p_topic:-1;
-          $d_selection = isset($p_difficulty) ? $p_difficulty:-1;
+          $t_selection = isset($p_team) ? $p_team:-1;
 
-          foreach ($topics as $topic) {
-            $topicId = $topic['id'];
-            $topicName = $topic['name'];
+          foreach ($teams as $team) {
+            $teamId = $team['id'];
+            $teamName = $team['name'];
             echo "
-            <option value='$topicId'".($t_selection == $topicId ? 'selected':'').">$topicName</option>";
+            <option value='$teamId'".($t_selection == $teamId ? 'selected':'').">$teamName</option>";
           }
         ?>
       </select>
       <br>
-      <label>Select Difficulty:</label>
-      <select name="p_difficulty">
-        <option value='1' <?php echo $d_selection == 1 ? 'selected':'' ?>>Standard</option>
-        <option value='2' <?php echo $d_selection == 2 ? 'selected':'' ?>>Advanced</option>
-      </select>
+      <label>Name:</label>
       <br>
-      <label>Participant:</label>
+      <input type="text" class="wide" value="<?php echo isset($p_name) ? $p_name: ""; ?>"/>
       <br>
-      <textarea type="text" name="p_text" value="" /><?php echo isset($p_text) ? $p_text: ""; ?></textarea>
+      <label>Email:</label>
       <br>
-      <label>Answer:</label>
+      <input type="text" class="wide" value="<?php echo isset($p_email) ? $p_email: ""; ?>"/>
       <br>
-      <textarea type="text" name="p_answer" value="" /><?php echo isset($p_answer) ? $p_answer: ""; ?></textarea>
+      <label>Major:</label>
+      <br>
+      <input type="text" class="wide" value="<?php echo isset($p_major) ? $p_major: ""; ?>"/>
       <br>
       <label>&nbsp;</label>
       <input type="submit" class="button" name="action" value="<?php echo $action_str; ?> Participant"/>

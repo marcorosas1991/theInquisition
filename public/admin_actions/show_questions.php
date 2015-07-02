@@ -4,13 +4,24 @@
 
 <section>
 
-  <h1>Questions</h1>
+  <div id="searchField" class="floatRight">
+    <form action="." method="post">
+      <label>&nbsp;</label>
+      <input type="hidden" name="action" value="search_questions"/>
+      <input type="text" name="search_str" value="" placeholder="Search for questions"/>
+      <input type="submit" class="button" name="submit" value="Search"/>
+    </form>
+  </div>
+
+
+  <h1 class="clear">Questions</h1>
 
   <?php include '../view/error.php'; ?>
 
   <form action="." method="post">
     <label>&nbsp;</label>
-    <input type="submit" class="roundButton" name="action" value="+"/>
+    <input type="hidden" name="action" value="add_question"/>
+    <input type="submit" class="roundButton" name="submit" value="+"/>
   </form>
   <hr>
 
