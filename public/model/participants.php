@@ -26,16 +26,15 @@
     $query = 'UPDATE participant
               SET name=:name
                   , email=:email
-                  , participant=:participant
+                  , major=:major
                   , team=:team
-                  , created_by=:created_by
               WHERE id=:id';
 
     $statement = $link->prepare($query);
     $statement->bindValue(':id', $id);
     $statement->bindValue(':name', $name);
     $statement->bindValue(':email', $email);
-    $statement->bindValue(':participant', $participant);
+    $statement->bindValue(':major', $major);
     $statement->bindValue(':team', $team);
     $statement->execute();
     $statement->closeCursor();

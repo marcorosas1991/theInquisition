@@ -263,10 +263,10 @@ else if ($action == 'add_participant') {
     showTeams($error);
   }
 }
-// insert participant
-else if ($action == 'Add Participant') {
+// insert participant OR update participant
+else if ($action == 'Add Participant' || $action == 'Update Participant') {
   $p_id = filter_input(INPUT_POST, 'p_id', FILTER_VALIDATE_INT);
-  
+
   $p_team = filter_input(INPUT_POST, 'p_team', FILTER_VALIDATE_INT);
   $p_name = filter_input(INPUT_POST, 'p_name', FILTER_SANITIZE_STRING);
   $p_email = filter_input(INPUT_POST, 'p_email', FILTER_SANITIZE_EMAIL);
@@ -279,11 +279,15 @@ else if ($action == 'Add Participant') {
   }
   // if there are not errors
   if ($error == '') {
-    addParticipant($p_name, $p_email, $p_major, $p_team);
+    if ($action == 'Update Participant') {
+      updateParticipant($p_id, $p_name, $p_email, $p_major, $p_team);
+    } else {
+      addParticipant($p_name, $p_email, $p_major, $p_team);
+    }
     showTeam($error, $p_team);
   } else {
     $team = getTeam($p_team);
-    $action_str = 'Add';
+    $action_str = $action == 'Add Participant' ? 'Add' : 'Update';
     include 'participant_form.php';
   }
 }
@@ -307,19 +311,6 @@ else if ($action == 'Edit Participant') {
     $error ='Select the participant again';
     showParticipants($error);
   }
-}
-// update participant
-else if ($action == 'Update Participant') {
-  $participant_id = filter_input(INPUT_POST, 'participant_id', FILTER_VALIDATE_INT);
-  $participant_name = filter_input(INPUT_POST, 'participant_name');
-
-  if ($participant_id == TRUE && $participant_name == TRUE) {
-    updateParticipant($participant_id, $participant_name);
-    $error = '';
-  } else {
-    $error ='There was a problem UPDATING the participant. Try again.';
-  }
-  showParticipants($error);
 }
 // delete participant
 else if ($action == 'Delete Participant') {
