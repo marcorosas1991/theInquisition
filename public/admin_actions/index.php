@@ -210,18 +210,17 @@ else if ($action == 'Add Team') {
 // edit a team
 else if ($action == 'Edit Team') {
   $team_id = filter_input(INPUT_POST, 'team_id', FILTER_VALIDATE_INT);
+  $error = '';
 
   if ($team_id == TRUE) {
-    $team = getTeam($team_id);
-    $team_name = $team['name'];
-    include 'team_form.php';
+    showTeam($error, $team_id);
   } else {
     $error ='Select the team again';
     showTeams($error);
   }
 }
 // update team
-else if ($action == 'Update Team') {
+else if ($action == 'Update Team Name') {
   $team_id = filter_input(INPUT_POST, 'team_id', FILTER_VALIDATE_INT);
   $team_name = filter_input(INPUT_POST, 'team_name');
 
@@ -252,33 +251,58 @@ else if ($action == 'Participants') {
   showParticipants();
 }
 // add participant
-else if ($action == 'add_') {
-  $teams = getTeams();
-  $action_str = 'Add';
-  include 'participant_form.php';
+else if ($action == 'add_participant') {
+  $team_id = filter_input(INPUT_POST, 'team_id', FILTER_VALIDATE_INT);
+
+  if ($team_id == TRUE) {
+    $team = getTeam($team_id);
+    $action_str = 'Add';
+    include 'participant_form.php';
+  } else {
+    $error ='Please try again';
+    showTeams($error);
+  }
 }
 // insert participant
 else if ($action == 'Add Participant') {
-  $participant_name = filter_input(INPUT_POST, 'participant_name');
-  $participant_name = filter_input(INPUT_POST, 'participant_name');
-  // makes sure participant name is not empty
-  if ($participant_name == NULL) {
-    $error = 'You must provide a participant name.';
-    showParticipants($error);
-  } else {
-    addParticipant($participant_name);
-    returnToParticipants();
-  }
+  $p_id = filter_input(INPUT_POST, 'p_id', FILTER_VALIDATE_INT);
+  
+  $p_team = filter_input(INPUT_POST, 'p_team', FILTER_VALIDATE_INT);
+  $p_name = filter_input(INPUT_POST, 'p_name', FILTER_SANITIZE_STRING);
+  $p_email = filter_input(INPUT_POST, 'p_email', FILTER_SANITIZE_EMAIL);
+  $p_major = filter_input(INPUT_POST, 'p_major', FILTER_SANITIZE_STRING);
+  $error = '';
 
+  // makes sure participant name is not empty
+  if ($p_name == NULL) {
+    $error .= 'You must provide a participant name.';
+  }
+  // if there are not errors
+  if ($error == '') {
+    addParticipant($p_name, $p_email, $p_major, $p_team);
+    showTeam($error, $p_team);
+  } else {
+    $team = getTeam($p_team);
+    $action_str = 'Add';
+    include 'participant_form.php';
+  }
 }
 // edit participant
 else if ($action == 'Edit Participant') {
-  $participant_id = filter_input(INPUT_POST, 'participant_id', FILTER_VALIDATE_INT);
+  $p_id = filter_input(INPUT_POST, 'p_id', FILTER_VALIDATE_INT);
 
-  if ($participant_id == TRUE) {
-    $participant = getParticipant($participant_id);
-    $participant_name = $participant['name'];
+  if ($p_id == TRUE) {
+    $participant = getParticipant($p_id);
+    $p_team = $participant['team'];
+    $p_name = $participant['name'];
+    $p_email = $participant['email'];
+    $p_major = $participant['major'];
+
+    $team = getTeam($p_team);
+    $action_str = 'Update';
+
     include 'participant_form.php';
+
   } else {
     $error ='Select the participant again';
     showParticipants($error);
@@ -366,6 +390,13 @@ function showTeams($errors = '') {
   $error = $errors;
   $teams = getTeams();
   include 'show_teams.php';
+}
+
+function showTeam($errors = '', $team_id) {
+  $team = getTeam($team_id);
+  $team_name = $team['name'];
+  $participants = getParticipantsForTeam($team_id);
+  include 'team_form.php';
 }
 
 function showParticipants($errors = '')

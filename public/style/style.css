@@ -30,6 +30,10 @@ h1 {
   text-transform: uppercase;
 }
 
+.no_text_transform {
+  text-transform: none;
+}
+
 h1, h2, h3, p, label {
   font-family: Futura, Helvetica;
 }
@@ -118,6 +122,7 @@ input {
 
 input.wide {
   width: 50%;
+  text-align: center;
 }
 
 input:focus, select:focus, textarea:focus {

@@ -28,6 +28,7 @@
         <thead>
           <tr>
             <th>Name</th>
+            <th>Participants</th>
             <th></th>
             <th></th>
           </tr>
@@ -38,6 +39,10 @@
             <tr>
               <td>
                 <p>".$team["name"]."</p>
+              </td>
+              <td>";
+              
+              echo "
               </td>
               <td>
                 <form action='.' method='post'>
