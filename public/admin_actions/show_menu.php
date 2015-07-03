@@ -8,7 +8,6 @@
   </form>
   <form action="." method="post">
     <input type="submit" class="bigButton adminBtnColor1" name="action" value="Teams"/>
-    <input type="submit" class="bigButton adminBtnColor2" name="action" value="Participants"/>
   </form>
   <form action="." method="post">
     <input type="submit" class="bigButton adminBtnColor1" name="action" value="Games"/>

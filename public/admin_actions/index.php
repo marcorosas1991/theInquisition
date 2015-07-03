@@ -308,8 +308,8 @@ else if ($action == 'Edit Participant') {
     include 'participant_form.php';
 
   } else {
-    $error ='Select the participant again';
-    showParticipants($error);
+    $error ='Select the team and participant again';
+    showTeams($error);
   }
 }
 // delete participant
@@ -380,6 +380,12 @@ function showQuestions($errors = '', $search_str = '')
 function showTeams($errors = '') {
   $error = $errors;
   $teams = getTeams();
+  $participants = array();
+
+  foreach ($teams as $team) {
+    $participants[] = getParticipantsForTeam($team['id']);
+  }
+
   include 'show_teams.php';
 }
 
@@ -388,11 +394,6 @@ function showTeam($errors = '', $team_id) {
   $team_name = $team['name'];
   $participants = getParticipantsForTeam($team_id);
   include 'team_form.php';
-}
-
-function showParticipants($errors = '')
-{
-  include 'show_teams.php';
 }
 
 

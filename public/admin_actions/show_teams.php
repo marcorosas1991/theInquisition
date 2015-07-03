@@ -40,9 +40,7 @@
               <td>
                 <p>".$team["name"]."</p>
               </td>
-              <td>";
-              
-              echo "
+              <td>
               </td>
               <td>
                 <form action='.' method='post'>
@@ -59,6 +57,24 @@
                 </form>
               </td>
             </tr>";
+            $line = array_shift($participants);
+            
+            foreach ($line as $participant) {
+              $p_name = $participant['name'];
+              echo "
+              <tr>
+                <td>
+                </td>
+                <td>
+                  $p_name
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+              </tr>
+              ";
+            }
           }
         echo "
         </tbody>
