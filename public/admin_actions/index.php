@@ -314,15 +314,15 @@ else if ($action == 'Edit Participant') {
 }
 // delete participant
 else if ($action == 'Delete Participant') {
-  $participant_id = filter_input(INPUT_POST, 'participant_id', FILTER_VALIDATE_INT);
+  $p_id = filter_input(INPUT_POST, 'p_id', FILTER_VALIDATE_INT);
 
-  if ($participant_id == TRUE) {
-    deleteParticipant($participant_id);
+  if ($p_id == TRUE) {
+    deleteParticipant($p_id);
     $error = '';
   } else {
     $error ='There was a problem DELETING the participant. Try again.';
   }
-  showParticipants($error);
+  showTeams($error);
 }
 
 
