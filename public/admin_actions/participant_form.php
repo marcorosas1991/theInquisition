@@ -25,7 +25,7 @@
       <br>
       <label>Email:</label>
       <br>
-      <input type="text" class="wide" name="p_email" value="<?php echo isset($p_email) ? $p_email: ""; ?>"/>
+      <input type="email" class="wide" name="p_email" value="<?php echo isset($p_email) ? $p_email: ""; ?>"/>
       <br>
       <label>Major:</label>
       <br>

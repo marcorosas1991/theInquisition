@@ -31,6 +31,7 @@
             <th>Participants</th>
             <th></th>
             <th></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>";
@@ -39,6 +40,8 @@
             <tr>
               <td>
                 <p>".$team["name"]."</p>
+              </td>
+              <td>
               </td>
               <td>
               </td>
@@ -58,15 +61,19 @@
               </td>
             </tr>";
             $line = array_shift($participants);
-            
+
             foreach ($line as $participant) {
               $p_name = $participant['name'];
+              $p_email = $participant['email'];
               echo "
               <tr>
                 <td>
                 </td>
                 <td>
                   $p_name
+                </td>
+                <td>
+                  $p_email
                 </td>
                 <td>
                 </td>

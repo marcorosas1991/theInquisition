@@ -6,7 +6,7 @@
 
 @font-face {
     font-family: 'Futura';
-    src: url('fonts/Futura.ttc');
+    src: url('fonts/Futura.ttf');
 }
 
 body {
@@ -14,12 +14,20 @@ body {
 }
 
 header {
-  padding-left: 20px;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+
+  margin-top: -20px;
 }
 
-a.title {
+.reduceTopMargin {
+  margin-top: -50px;
+}
+
+h1.title {
   font-family: 'Trattatello';
-  font-size: 3em;
+  font-size: 3.5em;
   color: #6c5353;
   text-transform: none;
 }
@@ -38,10 +46,15 @@ h1, h2, h3, p, label {
   font-family: Futura, Helvetica;
 }
 
+p.questionText, p.answerText {
+  font-size: 2.5em;
+}
+
 p.answerText {
   font-style: italic;
   font-family: helvetica;
   color: #aa151b;
+  margin-bottom: 30px;
 }
 
 p.gentleInstructions {
@@ -49,6 +62,15 @@ p.gentleInstructions {
   font-family: helvetica;
   font-size: 0.8em;
   margin-top: -5px;
+}
+
+p.results {
+  font-size: 2em;
+}
+
+p.winner {
+  font-size: 2.2em;
+  color: #aa151b;
 }
 
 label {
@@ -61,7 +83,7 @@ label {
 
 table {
   font-family: "Futura", Helvetica;
-  width: 80%;
+  /*width: 80%;*/
 }
 
 hr {
@@ -104,6 +126,21 @@ a {
 section {
   text-align: center;
   clear: both;
+  width: 90%;
+
+  margin-left: auto;
+  margin-right: auto;
+}
+
+div.scoreBar {
+  margin-top: -60px;
+  text-align: right;
+  font-size: 1.6em;
+}
+
+.score {
+  font-size: 1.4em;
+  color: #aa151b;
 }
 
 input {
@@ -118,6 +155,14 @@ input {
   background-color: white;
   margin-bottom: 10px;
   outline: 0;
+}
+
+input[type="checkbox"] {
+  width: auto;
+}
+
+.contestLabel {
+  font-size: 1.6em;
 }
 
 input.wide {
@@ -166,7 +211,7 @@ textarea {
 }
 
 .button {
-  font-family: "Futura";
+  font-family: "Futura", Helvetica;
   font-size: 1em;
   border-radius: .5em;
   color: white;
@@ -174,16 +219,22 @@ textarea {
   border: 1px solid transparent;
 
   letter-spacing:1px;
-  height: 30px;
+  min-height: 30px;
+  height: auto;
   border: 0px;
   background-color: #aa151b;
 
   margin: 10px;
 }
 
+.contestButton {
+  font-size: 1.4em;
+  margin-top: 40px;
+}
+
 .bigButton {
-  font-family: "Futura";
-  font-size: 1em;
+  font-family: "Futura", Helvetica;
+  font-size: 1.3em;
   border-radius: .5em;
   margin: 10px;
 
@@ -194,7 +245,7 @@ textarea {
 }
 
 .textButton {
-  font-family: "Futura";
+  font-family: "Futura", Helvetica;
   border: 1px solid white;
   background-color: none;
   width: auto;
@@ -202,7 +253,7 @@ textarea {
 
 .redLink {
   color: #aa151b;
-  font-family: "Futura";
+  font-family: "Futura", Helvetica;
   font-size: 1em;
 }
 
@@ -211,7 +262,7 @@ textarea {
 }
 
 .roundButton {
-  font-family: "Futura";
+  font-family: "Futura", Helvetica;
   font-size: 1em;
   color: white;
   width: auto;
@@ -241,6 +292,5 @@ textarea {
 }
 
 .contest_topic {
-  display: inline;
-  float: left;
+  display: inline-block;
 }

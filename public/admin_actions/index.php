@@ -12,7 +12,7 @@ require_once '../model/session.php';
 validateSession();
 
 $link = db_link();
-$start_in_menu = 'YES';
+$log_out_in_menu = TRUE;
 
 // getting action from post or get
 $action = filter_input(INPUT_POST, 'action');

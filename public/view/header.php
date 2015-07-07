@@ -11,12 +11,14 @@
 <!-- the body section -->
 <body>
 <header>
-  <a class="title" href=".">The Inquisition</a>
+  <h1 class="title">The Inquisition</h1>
 
   <?php
-  if (isset($start_in_menu)) : ?>
+  if (isset($log_out_in_menu)) : ?>
+  <div class="reduceTopMargin">
     <form action="." method="post">
       <input type="submit" class="button floatRight" name="action" value="Log Out"/>
     </form>
+  </div>
   <?php endif; ?>
 </header>
