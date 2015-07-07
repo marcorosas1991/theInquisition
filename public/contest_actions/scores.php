@@ -11,7 +11,7 @@
   <?php endforeach; ?>
 
   <form class="center alignRight" action="." method="post">
-    <input type='submit' class='button contestButton' name='action' value='Done'/>
+    <input type='submit' class='button' name='action' value='Done'/>
   </form>
 
 </section>

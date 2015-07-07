@@ -9,6 +9,7 @@ require_once '../model/participants.php';
 
 require_once '../model/session.php';
 
+startSession();
 validateSession();
 
 $link = db_link();

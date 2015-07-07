@@ -61,7 +61,7 @@
        <br>
         <label>&nbsp;</label>
         <br>
-        <input type="submit" class="button contestButton" name="action" value="Start"/>
+        <input type="submit" class="button" name="action" value="Start"/>
       </form>
    <?php endif; ?>
 

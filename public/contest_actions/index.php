@@ -49,7 +49,6 @@ if ($action == 'choose_teams') {
 
   $_SESSION['teams_in_game'] = $teams_in_game;
 
-
   header('Location: .');
 }
 
@@ -69,13 +68,20 @@ else if ($action == 'Remove Team') {
 
   header('Location: .');
 
-} else if ($action == 'Start') {
+}
+// start the game
+else if ($action == 'Start') {
 
-  $_SESSION['gameStarted'] = true;
-  $teams_in_game = $_SESSION['teams_in_game'];
+  if (!isset($_SESSION['teams_in_game']) || count($_SESSION['teams_in_game']) < 2) {
+    header('Location: .');
+  } else {
+    // session variable to recored game start
+    $_SESSION['gameStarted'] = true;
+    $teams_in_game = $_SESSION['teams_in_game'];
 
-  $topics = getTopics();
-  include 'pick_topic.php';
+    $topics = getTopics();
+    include 'pick_topic.php';
+  }
 } else if ($action == 'Done') {
   if (isset($_POST['points_to'])) {
 
@@ -170,8 +176,8 @@ else if ($action == 'Remove Team') {
 
     if ($error == '') {
       $log_out_in_menu = TRUE;
-      
-      //unset($_SESSION['teams_in_game']);
+
+      unset($_SESSION['teams_in_game']);
       unset($_SESSION['gameStarted']);
       include 'scores.php';
     } else {
@@ -181,7 +187,9 @@ else if ($action == 'Remove Team') {
   } else {
     header('Location: .');
   }
-
+} else if ($action == 'Log Out') {
+  session_destroy();
+  header('Location: ../.');
 }
 
 ?>
