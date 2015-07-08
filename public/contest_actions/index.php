@@ -10,6 +10,11 @@ require_once '../model/session.php';
 startSession();
 validateSession();
 
+if ($_SESSION['userType'] != 2 && $_SESSION['userType'] != 0) {
+  header('Location: ../.');
+  exit();
+}
+
 $link = db_link();
 
 $action = filter_input(INPUT_POST, 'action');
