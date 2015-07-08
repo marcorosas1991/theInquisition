@@ -15,6 +15,4 @@ function validateSession() {
 			//|| time() - $_SESSION['login_time'] > 600 //en caso de que se caduque la sesion
 }
 
-
-
 ?>
