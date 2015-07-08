@@ -11,7 +11,7 @@ for ($i=1; $i < 8; $i++) {
   echo "<br><br><b>$i</b>";
   for ($j = 0; $j < 10; $j++) {
 
-    $question = getRandomQuestion($i,5,1);
+    $question = getRandomQuestion($i,5);
 
     if ($question != NULL) {
       $text = $question['question'];

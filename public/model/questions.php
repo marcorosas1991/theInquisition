@@ -108,7 +108,7 @@
     return $questions;
   }
 
-  function getRandomQuestion($topic, $level, $mode) {
+  function getRandomQuestion($topic, $level, $game_id = -1) {
     // generates random number beetwen 1 and 10
     $random = mt_rand(1,10);
 
@@ -122,7 +122,7 @@
     // determines the difficulty
     $difficulty = ($random <= $advanced) ? 2 : 1;
 
-    if ($mode == 1) {
+    if ($game_id == -1) {
       $question = getRQuestion($topic, $difficulty);
 
       if ($question == NULL) {
@@ -130,11 +130,11 @@
         return getRQuestion($topic, $difficulty);
       }
     } else {
-      $question = getRQuestionRecycle($topic, $difficulty);
+      $question = getRQuestionRecycle($topic, $difficulty, $game_id);
 
       if ($question == NULL) {
         $difficulty = ($difficulty == 1) ? 2 : 1;
-        return getRQuestionRecycle($topic, $difficulty);
+        return getRQuestionRecycle($topic, $difficulty, $game_id);
       }
     }
 
@@ -171,7 +171,7 @@
     return NULL;
   }
 
-  function getRQuestionRecycle($topic, $level, $difficulty) {
+  function getRQuestionRecycle($topic, $difficulty, $game_id) {
     // query
     global $link;
     $query = 'SELECT id, topic, difficulty, question

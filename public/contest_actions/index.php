@@ -121,7 +121,7 @@ else if ($action == 'Done') {
   $topic_id = filter_input(INPUT_POST, 'topic_id', FILTER_VALIDATE_INT);
 
   if ($topic_id != NULL) {
-    $question = getRandomQuestion($topic_id,5,1);
+    $question = getRandomQuestion($topic_id,5);
 
     if ($question != NULL) {
       $q_text = $question['question'];
