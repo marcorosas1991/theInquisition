@@ -41,6 +41,8 @@ if ($action == 'login_page') {
           header('Location: contest_actions/.');
           break;
         case 3:
+          header('Location: admin_actions/.');
+          exit();
           break;
         default:
           echo 'not a valid user';
