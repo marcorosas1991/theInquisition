@@ -371,7 +371,7 @@ else if ($action == 'Delete User') {
 
 
 // START CONTEST ACTIONS
-elseif ($action == 'Start Game') {
+elseif ($action == 'Start A Game') {
   header('Location: ../contest_actions/');
 }
 

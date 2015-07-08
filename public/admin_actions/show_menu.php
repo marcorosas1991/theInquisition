@@ -1,6 +1,15 @@
 <?php include '../view/header.php'; ?>
 
+
 <section>
+  <?php if ($userType == 0) : ?>
+  <div class="alignRight">
+    <form action="." method="post">
+      <input type="submit" class="button btnColor1" name="action" value="Start A Game"/>
+    </form>
+  </div>
+  <?php endif; ?>
+
   <h1>Administrator</h1>
   <?php if ($userType == 0) : ?>
   <form action="." method="post">
