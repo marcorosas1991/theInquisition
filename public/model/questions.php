@@ -108,7 +108,7 @@
     return $questions;
   }
 
-  function getRandomQuestion($topic, $level) {
+  function getRandomQuestion($topic, $level, $mode) {
     // generates random number beetwen 1 and 10
     $random = mt_rand(1,10);
 
@@ -122,17 +122,56 @@
     // determines the difficulty
     $difficulty = ($random <= $advanced) ? 2 : 1;
 
-    $question = getRQuestion($topic, $level, $difficulty);
+    if ($mode == 1) {
+      $question = getRQuestion($topic, $difficulty);
 
-    if ($question == NULL) {
-      $difficulty = ($difficulty == 1) ? 2 : 1;
-      return getRQuestion($topic, $level, $difficulty);
+      if ($question == NULL) {
+        $difficulty = ($difficulty == 1) ? 2 : 1;
+        return getRQuestion($topic, $difficulty);
+      }
+    } else {
+      $question = getRQuestionRecycle($topic, $difficulty);
+
+      if ($question == NULL) {
+        $difficulty = ($difficulty == 1) ? 2 : 1;
+        return getRQuestionRecycle($topic, $difficulty);
+      }
     }
 
     return $question;
   }
 
-  function getRQuestion($topic, $level, $difficulty) {
+  function getRQuestion($topic, $difficulty) {
+    // query
+    global $link;
+    $query = 'SELECT id, topic, difficulty, question
+              FROM question
+              WHERE difficulty=:difficulty
+              AND topic=:topic
+              AND used=0';
+
+    $statement = $link->prepare($query);
+    $statement->bindValue(':difficulty', $difficulty);
+    $statement->bindValue(':topic', $topic);
+    $statement->execute();
+    $questions = $statement->fetchAll();
+    $statement->closeCursor();
+
+    $numQuestions = count($questions);
+
+    if ($numQuestions > 0) {
+      $random = mt_rand(0, $numQuestions - 1);
+      $question = $questions[$random];
+
+      updateLevel($question['id'], 1);
+
+      return $question;
+    }
+
+    return NULL;
+  }
+
+  function getRQuestionRecycle($topic, $level, $difficulty) {
     // query
     global $link;
     $query = 'SELECT id, topic, difficulty, question

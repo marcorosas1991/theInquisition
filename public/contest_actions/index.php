@@ -4,6 +4,7 @@ require_once '../../db_connection.php';
 require_once '../model/topics.php';
 require_once '../model/questions.php';
 require_once '../model/teams.php';
+require_once '../model/games.php';
 require_once '../model/session.php';
 
 startSession();
@@ -75,14 +76,34 @@ else if ($action == 'Start') {
   if (!isset($_SESSION['teams_in_game']) || count($_SESSION['teams_in_game']) < 2) {
     header('Location: .');
   } else {
-    // session variable to recored game start
-    $_SESSION['gameStarted'] = true;
+
     $teams_in_game = $_SESSION['teams_in_game'];
+
+    if (!isset($_SESSION['gameStarted'])) {
+      // session variable to recored game start
+      $_SESSION['gameStarted'] = true;
+      $creation_time = date('H-i-s').mt_rand(1001, 9999);
+      $user_id = $_SESSION['user_id'];
+
+      echo $creation_time."<br>";
+      echo $user_id."<br>";
+
+      addGame($user_id, $creation_time);
+      $game = getGameNatural($user_id, $creation_time);
+      $_SESSION['game_id'] = $game['id'];
+      echo $game['id'];
+
+      foreach ($teams_in_game as $t_id => $team) {
+        addGamesTeams($_SESSION['game_id'], $t_id, $team['score']);
+      }
+    }
 
     $topics = getTopics();
     include 'pick_topic.php';
   }
-} else if ($action == 'Done') {
+}
+
+else if ($action == 'Done') {
   if (isset($_POST['points_to'])) {
 
     $points_to = $_POST['points_to'];
@@ -100,7 +121,7 @@ else if ($action == 'Start') {
   $topic_id = filter_input(INPUT_POST, 'topic_id', FILTER_VALIDATE_INT);
 
   if ($topic_id != NULL) {
-    $question = getRandomQuestion($topic_id,5);
+    $question = getRandomQuestion($topic_id,5,1);
 
     if ($question != NULL) {
       $q_text = $question['question'];
@@ -163,6 +184,8 @@ else if ($action == 'Start') {
     $error = '';
     $max_score = -1;
     $winner;
+    $zeros = TRUE;
+
     foreach ($teams_in_game as $t_id => $team) {
       if ($max_score == $team['score']) {
         $error = 'Break the tie to finish the game';
@@ -172,6 +195,10 @@ else if ($action == 'Start') {
         $max_score = $team['score'];
         $winner = $t_id;
       }
+
+      if ($team['score'] != 0) {
+        $zeros = FALSE;
+      }
     }
 
     if ($error == '') {
@@ -180,6 +207,12 @@ else if ($action == 'Start') {
       unset($_SESSION['teams_in_game']);
       unset($_SESSION['gameStarted']);
       include 'scores.php';
+    } elseif ($zeros == TRUE) {
+
+      unset($_SESSION['teams_in_game']);
+      unset($_SESSION['gameStarted']);
+      header('Location: .');
+
     } else {
       $topics = getTopics();
       include 'pick_topic.php';
