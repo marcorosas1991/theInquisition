@@ -4,7 +4,7 @@
   <center>
     <form action="." method="post">
       <h1>Start Game</h1>
-      <?php if (!isset($teams_in_game) || count($teams_in_game) < 3)  :?>
+      <?php if (!isset($teams_in_game) || count($teams_in_game) < 4)  :?>
       <label>Add Teams:</label>
       <br>
       <select name="team_id">
