@@ -80,4 +80,17 @@
     $statement->execute();
     $statement->closeCursor();
   }
+  function updateGamesTeams($game_id, $team_id, $score) {
+    global $link;
+    $query = 'UPDATE games_teams
+              SET score=:score
+              WHERE game_id=:game_id
+              AND team_id=:team_id';
+    $statement = $link->prepare($query);
+    $statement->bindValue(':score', $score);
+    $statement->bindValue(':game_id', $game_id);
+    $statement->bindValue(':team_id', $team_id);
+    $statement->execute();
+    $statement->closeCursor();
+  }
 ?>

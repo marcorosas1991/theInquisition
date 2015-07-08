@@ -85,13 +85,10 @@ else if ($action == 'Start') {
       $creation_time = date('H-i-s').mt_rand(1001, 9999);
       $user_id = $_SESSION['user_id'];
 
-      echo $creation_time."<br>";
-      echo $user_id."<br>";
-
       addGame($user_id, $creation_time);
       $game = getGameNatural($user_id, $creation_time);
+
       $_SESSION['game_id'] = $game['id'];
-      echo $game['id'];
 
       foreach ($teams_in_game as $t_id => $team) {
         addGamesTeams($_SESSION['game_id'], $t_id, $team['score']);
@@ -186,6 +183,8 @@ else if ($action == 'Done') {
     $winner;
     $zeros = TRUE;
 
+    $game_id = $_SESSION['game_id'];
+
     foreach ($teams_in_game as $t_id => $team) {
       if ($max_score == $team['score']) {
         $error = 'Break the tie to finish the game';
@@ -199,10 +198,14 @@ else if ($action == 'Done') {
       if ($team['score'] != 0) {
         $zeros = FALSE;
       }
+
+      updateGamesTeams($game_id, $t_id, $team['score']);
     }
 
     if ($error == '') {
       $log_out_in_menu = TRUE;
+
+      updateGame($game_id, $winner);
 
       unset($_SESSION['teams_in_game']);
       unset($_SESSION['gameStarted']);
