@@ -30,5 +30,38 @@ function getUser($username, $password) {
   return $user;
 }
 
+function addUser($username, $password, $userType) {
+  global $link;
+  $query = 'INSERT INTO user (username, password, userType)
+            VALUES (:username, AES_ENCRYPT(:password, :username), :userType)';
+  $statement = $link->prepare($query);
+  $statement->bindValue(':username', $username);
+  $statement->bindValue(':password', $password);
+  $statement->bindValue(':userType', $userType);
+  $statement->execute();
+  $statement->closeCursor();
+}
+
+function getUsers() {
+  global $link;
+  $query = 'SELECT id, username, userType
+            FROM user';
+  $statement = $link->prepare($query);
+  $statement->execute();
+  $users = $statement->fetchAll();
+  $statement->closeCursor();
+  return $users;
+}
+
+function deleteUser($id) {
+  global $link;
+  $query = 'DELETE FROM user
+            WHERE id=:id';
+  $statement = $link->prepare($query);
+  $statement->bindValue(':id', $id);
+  $statement->execute();
+  $statement->closeCursor();
+}
+
 
 ?>

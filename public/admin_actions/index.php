@@ -6,6 +6,7 @@ require_once '../model/topics.php';
 require_once '../model/questions.php';
 require_once '../model/teams.php';
 require_once '../model/participants.php';
+require_once '../model/users.php';
 
 require_once '../model/session.php';
 
@@ -14,6 +15,7 @@ validateSession();
 
 $link = db_link();
 $log_out_in_menu = TRUE;
+$userType = $_SESSION['userType'];
 
 // getting action from post or get
 $action = filter_input(INPUT_POST, 'action');
@@ -326,9 +328,50 @@ else if ($action == 'Delete Participant') {
   showTeams($error);
 }
 
+// USER ACTIONS
+// add user
+else if ($action == 'Users') {
+  $users = getUsers();
+  include 'show_users.php';
+}
+
+//insert user
+else if ($action == 'Add User') {
+  $username = filter_input(INPUT_POST, 'username');
+  $password = filter_input(INPUT_POST, 'password');
+
+  $error = '';
+
+  if ($username == FALSE || $password == FALSE) {
+    $error = 'Username or Password can not be blank';
+    include 'user_form.php';
+  } else {
+    addUser($username, $password, 2);
+    header('Location: .?action=Users');
+  }
+
+}
+
+//delete user
+else if ($action == 'Delete User') {
+  $user_id = filter_input(INPUT_POST, 'user_id', FILTER_VALIDATE_INT);
+
+  if ($user_id != FALSE) {
+    if ($user_id != 4) {
+      deleteUser($user_id);
+    }
+  }
+
+  header('Location: .?action=Users');
+
+}
+
+
+
+
 
 // START CONTEST ACTIONS
-elseif ($action == 'Start Contest') {
+elseif ($action == 'Start Game') {
   header('Location: ../contest_actions/');
 }
 

@@ -26,6 +26,7 @@ if ($action == 'login_page') {
       session_start();
       $_SESSION['user']=$user['username'];
       $_SESSION['user_id']=$user['id'];
+      $_SESSION['userType'] = $user['userType'];
       $userType = $user['userType'];
 
       switch ($userType) {
