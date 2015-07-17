@@ -11,7 +11,7 @@
 <!-- the body section -->
 <body>
 <header>
-  <h1 class="title">The Inquisition</h1>
+  <p class="title">The Inquisition</p>
 
   <?php
   if (isset($log_out_in_menu)) : ?>
