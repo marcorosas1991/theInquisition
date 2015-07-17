@@ -45,7 +45,8 @@ function addUser($username, $password, $userType) {
 function getUsers() {
   global $link;
   $query = 'SELECT id, username, userType
-            FROM user';
+            FROM user
+            WHERE userType <> 0';
   $statement = $link->prepare($query);
   $statement->execute();
   $users = $statement->fetchAll();

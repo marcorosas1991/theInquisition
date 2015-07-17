@@ -21,7 +21,7 @@
       <br>
       <label>Name:</label>
       <br>
-      <input type="text" class="wide" name="p_name" value="<?php echo isset($p_name) ? $p_name: ""; ?>"/>
+      <input type="text" class="wide" name="p_name" value="<?php echo isset($p_name) ? $p_name: ""; ?>" required/>
       <br>
       <label>Email:</label>
       <br>

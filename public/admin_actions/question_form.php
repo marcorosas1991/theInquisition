@@ -33,11 +33,11 @@
       <br>
       <label>Question:</label>
       <br>
-      <textarea type="text" name="q_text" value="" /><?php echo isset($q_text) ? $q_text: ""; ?></textarea>
+      <textarea type="text" name="q_text" value="" required ><?php echo isset($q_text) ? $q_text: ""; ?></textarea>
       <br>
       <label>Answer:</label>
       <br>
-      <textarea type="text" name="q_answer" value="" /><?php echo isset($q_answer) ? $q_answer: ""; ?></textarea>
+      <textarea type="text" name="q_answer" value="" required ><?php echo isset($q_answer) ? $q_answer: ""; ?></textarea>
       <br>
       <label>&nbsp;</label>
       <input type="submit" class="button" name="action" value="<?php echo $action_str; ?> Question"/>

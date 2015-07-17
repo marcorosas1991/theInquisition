@@ -9,11 +9,11 @@
   <form action="." method="post">
     <label>Username:</label>
     <br>
-    <input type="text" name="username" value="<?php echo $username;?>" />
+    <input type="text" name="username" value="<?php echo $username;?>" required/>
     <br>
     <label>Password:</label>
     <br>
-    <input type="password" name="password" value="" />
+    <input type="password" name="password" value="" required/>
     <br>
     <label>&nbsp;</label>
     <input type="submit" class="button" name="action" value="Update User"/>

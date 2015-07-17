@@ -349,7 +349,8 @@ else if ($action == 'Add User') {
 
   if ($username == FALSE || $password == FALSE) {
     $error = 'Username or Password can not be blank';
-    include 'user_form.php';
+    $users = getUsers();
+    include 'show_users.php';
   } else {
     addUser($username, $password, 2);
     header('Location: .?action=Users');

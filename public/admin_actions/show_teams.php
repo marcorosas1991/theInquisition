@@ -8,7 +8,7 @@
   <?php include '../view/error.php'; ?>
   <form action="." method="post">
     <label>Name:</label>
-    <input type="text" name="team_name" />
+    <input type="text" name="team_name" required />
     <label>&nbsp;</label>
     <input type="submit" class="button" name="action" value="Add Team"/>
   </form>
