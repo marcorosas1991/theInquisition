@@ -10,7 +10,7 @@ require_once '../model/session.php';
 startSession();
 validateSession();
 
-if ($_SESSION['userType'] != 0) {
+if ($_SESSION['userType'] != 2 && $_SESSION['userType'] != 0) {
   header('Location: ../.');
   exit();
 }

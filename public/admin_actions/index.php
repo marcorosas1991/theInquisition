@@ -17,6 +17,11 @@ $link = db_link();
 $log_out_in_menu = TRUE;
 $userType = $_SESSION['userType'];
 
+if ($_SESSION['userType'] != 0) {
+  header('Location: ../.');
+  exit();
+}
+
 // getting action from post or get
 $action = filter_input(INPUT_POST, 'action');
 if ($action == NULL) {
