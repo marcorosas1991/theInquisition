@@ -247,7 +247,7 @@ textarea {
 .textButton {
   font-family: "Futura", Helvetica;
   border: 1px solid white;
-  background-color: none;
+  background-color: white;
   width: auto;
 }
 
