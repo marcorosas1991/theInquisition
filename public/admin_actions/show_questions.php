@@ -4,6 +4,7 @@
   startSession();
   validateSession();
 ?>
+
 <?php include '../view/header.php'; ?>
 
 <?php include '../view/back_button.php'; ?>
